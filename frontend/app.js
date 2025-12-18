@@ -92,3 +92,20 @@ document.getElementById("myGiftBtn").addEventListener("click", async () => {
             ? "You gift 🥀 → " + data.yourPerson
             : JSON.stringify(data);
 });
+
+document.getElementById("membersBtn").addEventListener("click", async () => {
+  const roomCode = document.getElementById("roomCodeInput").value;
+
+  const res = await fetch(`${API_URL}/room-info`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "user-id": userId
+    },
+    body: JSON.stringify({ roomCode })
+  });
+
+  const data = await res.json();
+  document.getElementById("roomResult").innerText =
+    "members 🥀: " + data.members.join(", ");
+});
