@@ -1,5 +1,5 @@
 // 🥀 BACKEND URL (Cloudflare Worker)
-const API_URL = "https://cf-backend.jeremyelaysrankota.workers.dev";
+const API_URL = "https://secret-santa-backend.jeremyelaysrankota.workers.dev";
 
 // 🥀 get or create userId
 let userId = localStorage.getItem("userId");
