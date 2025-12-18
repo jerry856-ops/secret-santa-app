@@ -34,7 +34,7 @@ document.getElementById("createRoomBtn").addEventListener("click", async () => {
 
     const data = await res.json();
     document.getElementById("roomResult").innerText =
-        "created: " + JSON.stringify(data);
+        "created 🥀 room: " + data.roomCode;
 });
 
 // 🥀 join room
@@ -52,7 +52,7 @@ document.getElementById("joinRoomBtn").addEventListener("click", async () => {
 
     const data = await res.json();
     document.getElementById("roomResult").innerText =
-    "created 🥀 room: " + data.roomCode;
+        "joined 🥀 room: " + roomCode;
 });
 
 // 🥀 assign secret santa
