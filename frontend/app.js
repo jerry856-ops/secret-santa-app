@@ -1,61 +1,47 @@
-// check if userId exists in browser
+// 🥀 BACKEND URL (Cloudflare Worker)
+const API_URL = "https://cf-backend.jeremyelaysrankota.workers.dev";
+
+// 🥀 get or create userId
 let userId = localStorage.getItem("userId");
 
-// if not, generate one
 if (!userId) {
-    userId = crypto.randomUUID(); // creates unique ID
+    userId = crypto.randomUUID();
     localStorage.setItem("userId", userId);
     console.log("🥀 new user created:", userId);
 } else {
     console.log("🥀 welcome back user:", userId);
 }
 
-// button test — calls backend with userId
+// 🥀 ping backend
 document.getElementById("pingBtn").addEventListener("click", async () => {
-    const res = await fetch("http://localhost:3000/api/santa/ping", {
+    const res = await fetch(`${API_URL}/ping`, {
         headers: { "user-id": userId }
     });
     const data = await res.json();
-    document.getElementById("result").innerText = data.msg + " | id: " + userId;
+    document.getElementById("result").innerText =
+        data.msg + " | id: " + userId;
 });
 
-// create room
+// 🥀 create room
 document.getElementById("createRoomBtn").addEventListener("click", async () => {
-    const res = await fetch("http://localhost:3000/api/santa/create-room", {
+    const res = await fetch(`${API_URL}/create-room`, {
         method: "POST",
-        headers: { 
+        headers: {
             "Content-Type": "application/json",
-            "user-id": userId 
+            "user-id": userId
         }
     });
 
     const data = await res.json();
-    document.getElementById("roomResult").innerText = "created: " + JSON.stringify(data);
+    document.getElementById("roomResult").innerText =
+        "created: " + JSON.stringify(data);
 });
 
-
-// join room
+// 🥀 join room
 document.getElementById("joinRoomBtn").addEventListener("click", async () => {
     const roomCode = document.getElementById("roomCodeInput").value;
 
-    const res = await fetch("http://localhost:3000/api/santa/join-room", {
-        method: "POST",
-        headers: { 
-            "Content-Type": "application/json",
-            "user-id": userId 
-        },
-        body: JSON.stringify({ roomCode })
-    });
-
-    const data = await res.json();
-    document.getElementById("roomResult").innerText = "joined: " + JSON.stringify(data);
-});
-
-// assign secret santa
-document.getElementById("assignBtn").addEventListener("click", async () => {
-    const roomCode = document.getElementById("roomCodeInput").value;
-
-    const res = await fetch("http://localhost:3000/api/santa/assign", {
+    const res = await fetch(`${API_URL}/join-room`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -65,14 +51,33 @@ document.getElementById("assignBtn").addEventListener("click", async () => {
     });
 
     const data = await res.json();
-    document.getElementById("assignResult").innerText = JSON.stringify(data, null, 2);
+    document.getElementById("roomResult").innerText =
+        "joined: " + JSON.stringify(data);
 });
 
-// see only MY assignment
+// 🥀 assign secret santa
+document.getElementById("assignBtn").addEventListener("click", async () => {
+    const roomCode = document.getElementById("roomCodeInput").value;
+
+    const res = await fetch(`${API_URL}/assign`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "user-id": userId
+        },
+        body: JSON.stringify({ roomCode })
+    });
+
+    const data = await res.json();
+    document.getElementById("assignResult").innerText =
+        JSON.stringify(data, null, 2);
+});
+
+// 🥀 see ONLY my assignment
 document.getElementById("myGiftBtn").addEventListener("click", async () => {
     const roomCode = document.getElementById("roomCodeInput").value;
 
-    const res = await fetch("http://localhost:3000/api/santa/my-assignment", {
+    const res = await fetch(`${API_URL}/my-assignment`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -83,5 +88,7 @@ document.getElementById("myGiftBtn").addEventListener("click", async () => {
 
     const data = await res.json();
     document.getElementById("myGiftResult").innerText =
-        data.yourPerson ? "You gift 🥀 → " + data.yourPerson : JSON.stringify(data);
+        data.yourPerson
+            ? "You gift 🥀 → " + data.yourPerson
+            : JSON.stringify(data);
 });
