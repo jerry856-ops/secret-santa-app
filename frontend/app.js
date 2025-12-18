@@ -39,7 +39,16 @@ document.getElementById("createRoomBtn").addEventListener("click", async () => {
 
 // 🥀 join room
 document.getElementById("joinRoomBtn").addEventListener("click", async () => {
-    const roomCode = document.getElementById("roomCodeInput").value.trim();
+    const roomCode = document
+        .getElementById("roomCodeInput")
+        .value
+        .trim();
+
+    if (!roomCode) {
+        document.getElementById("roomResult").innerText =
+            "❌ enter a room code 🥀";
+        return;
+    }
 
     const res = await fetch(`${API_URL}/join-room`, {
         method: "POST",
@@ -52,12 +61,14 @@ document.getElementById("joinRoomBtn").addEventListener("click", async () => {
 
     const data = await res.json();
 
+    // 🧠 CHECK IF ROOM EXISTS
     if (data.error) {
         document.getElementById("roomResult").innerText =
-            "❌ " + data.error;
+            "❌ room not found 🥀";
         return;
     }
 
+    // ✅ ONLY IF BACKEND CONFIRMS
     document.getElementById("roomResult").innerText =
         "joined 🥀 room: " + roomCode;
 });
