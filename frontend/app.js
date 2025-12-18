@@ -33,9 +33,8 @@ document.getElementById("createRoomBtn").addEventListener("click", async () => {
     });
 
     const data = await res.json();
-    document.getElementById("membersResult").innerText =
-    "members 🥀: " + data.members.join(", ");
-
+    document.getElementById("roomResult").innerText =
+        "created: " + JSON.stringify(data);
 });
 
 // 🥀 join room
@@ -107,6 +106,7 @@ document.getElementById("membersBtn").addEventListener("click", async () => {
   });
 
   const data = await res.json();
-  document.getElementById("roomResult").innerText =
-    "members 🥀: " + data.members.join(", ");
+    document.getElementById("membersResult").innerText =
+      "members 🥀: " + data.members.join(", ");
+
 });
