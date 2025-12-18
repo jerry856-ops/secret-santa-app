@@ -52,7 +52,7 @@ document.getElementById("joinRoomBtn").addEventListener("click", async () => {
 
     const data = await res.json();
     document.getElementById("roomResult").innerText =
-        "joined: " + JSON.stringify(data);
+    "created 🥀 room: " + data.roomCode;
 });
 
 // 🥀 assign secret santa
