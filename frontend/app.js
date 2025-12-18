@@ -33,8 +33,9 @@ document.getElementById("createRoomBtn").addEventListener("click", async () => {
     });
 
     const data = await res.json();
-    document.getElementById("roomResult").innerText =
-        "created: " + JSON.stringify(data);
+    document.getElementById("membersResult").innerText =
+    "members 🥀: " + data.members.join(", ");
+
 });
 
 // 🥀 join room
